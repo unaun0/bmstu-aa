@@ -1,12 +1,12 @@
 from simple_term_menu import TerminalMenu
 from art import tprint 
 from .calculator.StringDistanceCalculator import StringDistanceCalculator
-from .calculator.Analyzer import Analyzer
+from .calculator.algorithms.Distances import analyze
 
 class App:
     def __init__(self):
         self.calculator = StringDistanceCalculator('', '')
-        self.analyzer = Analyzer()
+        #self.analyzer = Analyzer()
         self.makemenu()
     
     def mainloop(self):
@@ -35,8 +35,7 @@ class App:
             self.algDLDRC()
         elif cmd == 6:
             print("\nВыполняется анализ алгоритмов...")
-            self.analyzer.timeAnalyse()
-            self.appexit()
+            analyze()
         elif cmd == 7:
             self.appexit()
         else:
@@ -56,13 +55,9 @@ class App:
     
     def algLD(self):
         self.printResult(self.calculator.CalculateDistance(False)) 
-        print("Матрица расстояний: ")
-        self.calculator.printMatrix()
     
     def algDLD(self):
         self.printResult(self.calculator.CalculateDistance(True))
-        print("Матрица расстояний: ")
-        self.calculator.printMatrix()
 
     def algDLDR(self):
         self.printResult(self.calculator.CalculateDistanceRecursive(False))

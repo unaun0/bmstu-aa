@@ -1,9 +1,7 @@
 from tabulate import tabulate
 from copy import deepcopy
-from .algorithms.LevenshteinDistance import LevenshteinDistance
-from .algorithms.DamerauLevenshteinDistanceRecCache import DamerauLevenshteinDistanceRecCache
-from .algorithms.DamerauLevenshteinDistanceRecursive import DamerauLevenshteinDistanceRecursive
-from .algorithms.DamerauLevenshteinDistance import DamerauLevenshteinDistance
+from .algorithms.Distances import LevenshteinDistance, DamerauLevenshteinDistance, DamerauLevenshteinDistanceRecCache, DamerauLevenshteinDistanceRecursive
+
 
 class StringDistanceCalculator:
     def __init__(self, String1 = "", String2 = ""):
@@ -46,26 +44,17 @@ class StringDistanceCalculator:
         
     def CalculateDistance(self, tp=True):
         if tp:
-            return DamerauLevenshteinDistance(self._String1, self._String2, self.matrix)
-        return LevenshteinDistance(self._String1, self._String2, self.matrix)
+            return DamerauLevenshteinDistance(self._String1, self._String2)
+        return LevenshteinDistance(self._String1, self._String2)
         
-
     def CalculateDistanceRecursive(self, cache=True):
         if cache:
             memo = {}
-            return DamerauLevenshteinDistanceRecCache(self._String1, self._String2, memo)
+            return DamerauLevenshteinDistanceRecCache(self._String1, self._String2)
         return DamerauLevenshteinDistanceRecursive(self._String1, self._String2)
     
     def info(self):
         print(f"Первая строка: '{self.String1}', длина - {self.lenStr1}")
         print(f"Вторая стркоа: '{self.String2}',  длина - {self.lenStr2}")
 
-    def printMatrix(self):
-        headers = list(self.String2)  
-        rowheaders = list(self.String1)
-        table = deepcopy(self.matrix)
-        table[0].insert(0, '')
-        for i in range(0, self.lenStr1):
-            table[i + 1].insert(0, self.String1[i])
-        print(tabulate(table, headers=headers, tablefmt="fancy_grid", showindex=False))
 
